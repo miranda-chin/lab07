@@ -58,7 +58,7 @@ Ultimately, these findings can guide future environmental policy not only within
 *Data:*
 
 Some of the data we will be working with includes pre-generated data files from the Environmental Protection Agency focusing on ozone levels.
-We will need to narrow it down substantially in order to only get data for our area of interest, as well as focus on only the parameters which will be relevant to our project.
+We will need to narrow it down substantially in order to only get data for our area of interest, as well as focus on only the parameters which will be relevant to our project, but will most likely not need to clean the data as the majority of it is already well-ordered.
 Additionally we will be using legislative documents in order to better understand the policies we will be analyzing and how they did or did not impact ozone levels in Fort Collins.
 
 Data visualization:
