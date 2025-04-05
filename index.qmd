@@ -24,20 +24,23 @@ Air quality is an increasingly urgent public health concern across many urban ce
 Despite its reputation for clean air and progressive environmental values, Fort Collins has consistently ranked among the worst cities in the nation for ground-level ozone pollution.
 According to recent data, the region frequently exceeds the ozone limits set by the Environmental Protection Agency (EPA), placing residents—especially those with respiratory conditions—at heightened risk.
 High levels of ozone have been directly linked to increased rates of asthma, chronic bronchitis, and other respiratory diseases, which can result in more frequent emergency room visits and reduced overall quality of life [@chang2006ozone].
-Ground-level ozone, unlike the protective stratospheric ozone layer, is a harmful air pollutant formed through complex photochemical reactions.
+Ground-level ozone, unlike the protective stratospheric ozone layer, is a harmful air pollutant formed through complex photo-chemical reactions.
 Specifically, it is produced when volatile organic compounds (VOCs) and nitrogen oxides (NOx) react in the presence of sunlight and heat.
 Of these precursors, NOx is primarily emitted from the combustion of fossil fuels, making vehicle emissions a dominant source in urban environments [@lowi1990method].
+
 With the growing population and vehicular traffic in Fort Collins, the city has faced increasing pressure to manage its emissions and reduce ozone pollution levels.
 Recognizing the health and environmental risks posed by ozone pollution, Fort Collins has implemented a series of policy initiatives over the past two decades aimed at curbing vehicle emissions and promoting cleaner transportation alternatives.
 These include infrastructure investments to support walking and biking, expanded public transportation networks, and efforts to limit single-occupancy vehicle travel.
 Additionally, municipal plans have emphasized land use strategies that encourage compact, transit-oriented development and discourage sprawl.
 While these policies demonstrate a strong commitment to environmental stewardship, the extent to which they have actually succeeded in reducing ozone pollution remains unclear.
 Understanding the effectiveness of these policies is not only critical for guiding future environmental and public health strategies in Fort Collins, but also provides a valuable case study for other cities grappling with similar challenges.
+
 As climate change continues to exacerbate heat levels and increase the frequency of high-ozone days, evaluating the success of local mitigation efforts is more important than ever [@chang2006ozone].
 This research seeks to address this knowledge gap by systematically examining ozone trends in relation to the implementation of transportation and emissions-related policies in Fort Collins.
 The objective of this study is to assess the impact of vehicle emission-reduction policies on ambient ozone levels in Fort Collins.
 Specifically, we aim to identify which policy measures have been most successful in lowering ozone concentrations and whether their implementation corresponds to observable improvements in air quality over time.
 By evaluating the relative effectiveness of different interventions, we hope to inform both local and regional decision-makers on best practices for managing urban ozone pollution.
+
 To achieve this, we propose a mixed-methods approach that combines quantitative air quality data analysis with a comprehensive policy review.
 Ambient ozone concentration data will be obtained from established air quality monitoring stations in and around Fort Collins, covering a multi-year time frame that spans periods before and after the enactment of specific policy initiatives.
 Using time-series analysis, we will identify significant changes or trends in ozone levels and assess whether these coincide with policy milestones.
@@ -51,6 +54,7 @@ Particular attention will be given to measures that directly target vehicle emis
 To rigorously assess the causal relationship between policy implementation and changes in ozone levels, we will employ statistical techniques such as difference-in-differences (DiD) modeling.
 This approach allows us to compare trends in Fort Collins before and after policy enactments against a control group that did not experience similar interventions.
 By isolating the effects of policy from broader environmental or economic changes, we aim to draw more robust conclusions about the actual impact of specific measures.
+
 The expected outcome of this research is the identification of the most effective policy or set of policies in reducing vehicle emissions and, consequently, ozone pollution in Fort Collins.
 We hypothesize that policies which directly address vehicle usage—such as enhanced public transit options or urban design that reduces car dependency—will correlate with the most significant reductions in ozone concentrations.
 Ultimately, these findings can guide future environmental policy not only within Fort Collins but also serve as a blueprint for other municipalities seeking to combat ground-level ozone and protect public health in the face of growing environmental challenges.
