@@ -71,9 +71,9 @@ Data visualization:
 library(ggplot2)
 library(dplyr)
 
-ozone_dat <- readr::read_csv("daily_44201_2003.csv")
+ozone_data <- readr::read_csv("daily_44201_2003.csv")
   
-filter_data <- ozone_dat %>% 
+filter_data <- ozone_data %>% 
   filter(`County Name` == "Larimer")
 
 ggplot(data = filter_data, aes(x = `Site Num`, y = `AQI`)) +
