@@ -171,6 +171,105 @@ div.csl-indent {
 </div>
 <p><em>Preliminary methods:</em></p>
 <p>Our methods will be within R, as for analysis we will be focusing on comparing different models that show ozone over time. At the moment we have everything needed to carry out this analysis, but will need to start narrowing down which policies we will be focusing on and where we will get our data from. A potential challenge we could face is if the data is if the EPA does not have data that is as focused on our area as we want; if our data is not detailed enough, then we could potentially struggle to get accurate results. However, if this is the case then we could get supplemental data from the Colorado Department of Public Health and Environment as they have some air quality datasets available. These datasets have information for specific places which make them useful for our project, but they don’t have ozone data over time which makes them harder to work with.</p>
+<p><em>Methods</em></p>
+<p><strong>2.1 Study Design</strong></p>
+<p>This study utilizes a mixed-methods design, incorporating both quantitative and qualitative data to assess the relationship between local policy interventions and ground-level ozone concentrations in Fort Collins, Colorado. The primary objective is to evaluate whether transportation-related policies aimed at reducing vehicle emissions have led to measurable changes in ambient ozone levels over time.</p>
+<p><strong>2.2 Study Area and Control Selection</strong></p>
+<p>The primary study area is Fort Collins, Colorado. As a control, we selected Greeley, Colorado—a nearby city with comparable population size, geography, and climate, but with fewer transportation-focused environmental interventions. The assumption underlying this choice is that differences in ozone trends between the two cities can be attributed, at least in part, to differing policy regimes.</p>
+<p><strong>2.3 Ozone and Meteorological Data Collection</strong></p>
+<p>Ambient ozone concentration data will be collected from the EPA’s Air Quality System (AQS) database and local monitoring stations operated by the Colorado Department of Public Health and Environment (CDPHE). Data will be collected over a multi-year time frame, ideally spanning 10–15 years to ensure sufficient pre- and post-policy data points. In addition to ozone levels, meteorological data (including temperature, wind speed, humidity, and solar radiation) will be obtained from the National Oceanic and Atmospheric Administration (NOAA) and used to control for weather-related variability in ozone formation.</p>
+<p><strong>2.4 Policy Timeline Development</strong></p>
+<p>A detailed timeline of policy enactments in Fort Collins will be developed through a review of city council records, transportation master plans, and local sustainability reports. Each policy will be categorized by type (e.g., infrastructure investment, public transit expansion, emission regulation) and date of implementation. Greeley’s policy timeline will also be reviewed to ensure that it did not implement similar policies during the study period.</p>
+<p><strong>2.5 Data Analysis</strong></p>
+<p><strong>2.5.1 Time-Series Analysis</strong></p>
+<p>We will conduct a time-series analysis to examine trends in ozone concentrations over time in both Fort Collins and Greeley. Data will be aggregated to monthly averages to smooth out short-term fluctuations while preserving seasonal patterns.</p>
+<p><strong>2.5.2 Difference-in-Differences (DiD) Analysis</strong></p>
+<p>To estimate the causal impact of Fort Collins’ policies on ozone levels, we will use a difference-in-differences (DiD) statistical model. This method compares the change in ozone concentrations in Fort Collins before and after policy implementation with the corresponding change in Greeley over the same period. The basic DiD model is as follows:</p>
+<p>Yit​=α+β1​Postt​+β2​Treatmenti​+β3​(Postt​×Treatmenti​)+γXit​+ϵit​</p>
+<p>Where:</p>
+<p>Yit​ = ozone level in city iii at time ttt</p>
+<p>Postt​ = indicator for post-policy period</p>
+<p>Treatmenti​ = indicator for Fort Collins (treatment group)</p>
+<p>Xit​ = vector of control variables (e.g., temperature, wind)</p>
+<p>β3​ = estimated treatment effect</p>
+<p><em>Results</em></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 1
+   Date      
+   &lt;date&gt;    
+ 1 2003-01-01
+ 2 2003-01-02
+ 3 2003-01-03
+ 4 2003-01-04
+ 5 2003-01-05
+ 6 2003-01-06
+ 7 2003-01-08
+ 8 2003-01-09
+ 9 2003-01-10
+10 2003-01-11</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  `County Name`  Year   AQI Treated  Post Interaction
+  &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;
+1 Boulder        2003  45.9       0     0           0
+2 Boulder        2021  54.2       0     1           0
+3 Larimer        2003  50.0       1     0           0
+4 Larimer        2021  54.1       1     1           1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = AQI ~ Treated + Post + Interaction, data = did_yearly_data)
+
+Residuals:
+ALL 4 residuals are 0: no residual degrees of freedom!
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)   45.912        NaN     NaN      NaN
+Treated        4.038        NaN     NaN      NaN
+Post           8.270        NaN     NaN      NaN
+Interaction   -4.093        NaN     NaN      NaN
+
+Residual standard error: NaN on 0 degrees of freedom
+Multiple R-squared:      1, Adjusted R-squared:    NaN 
+F-statistic:   NaN on 3 and 0 DF,  p-value: NA</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = AQI ~ Treated + Post + Interaction, data = did_monthly_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-22.205 -16.172  -6.199  13.665  46.780 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   45.672      5.651   8.082 3.07e-10 ***
+Treated        4.790      7.992   0.599    0.552    
+Post           8.371      7.992   1.048    0.301    
+Interaction   -6.254     11.302  -0.553    0.583    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 19.58 on 44 degrees of freedom
+Multiple R-squared:  0.02771,   Adjusted R-squared:  -0.03858 
+F-statistic: 0.418 on 3 and 44 DF,  p-value: 0.7409</code></pre>
+</div>
+</div>
+<p>In the DiD monthly model, Boulder’s ozone AQI went up by 8.4 units while Larimer’s ozone was smaller by 6.3 units, indicating that Larimer had a smaller increase in ozone. However, the p-value is 0.741, which is not scientifically significant; this means that the model cannot explain variations in the data and these differences could be from random error.</p>
 
 </section>
 
@@ -604,7 +703,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

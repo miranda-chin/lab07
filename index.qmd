@@ -71,7 +71,7 @@ Data visualization:
 library(ggplot2)
 library(dplyr)
 
-ozone_data <- readr::read_csv("daily_44201_2003.csv")
+ozone_data <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/daily_44201_2003.csv")
   
 filter_data <- ozone_data %>% 
   filter(`County Name` == "Larimer")
@@ -148,14 +148,114 @@ Xit​ = vector of control variables (e.g., temperature, wind)
 β3​ = estimated treatment effect
 
 *Results*
+```{r}
+#Set up data
+#Load data
+data_2003 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data.csv")
+data_2004 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(1).csv")
+data_2005 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(2).csv")
+data_2006 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(3).csv")
+data_2007 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(4).csv")
+data_2008 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(5).csv")
+data_2009 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(6).csv")
+data_2010 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(7).csv")
+data_2011 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(8).csv")
+data_2012 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(9).csv")
+data_2013 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(10).csv")
+data_2014 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(11).csv")
+data_2015 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(12).csv")
+data_2016 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(13).csv")
+data_2017 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(14).csv")
+data_2018 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(15).csv")
+data_2019 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(16).csv")
+data_2020 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(17).csv")
+data_2021 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/ozone_fc_03_21/ad_viz_plotval_data(18).csv")
+
+total_data <- rbind(data_2003, data_2004, data_2005, data_2006, data_2007, 
+                    data_2008, data_2009, data_2010, data_2011, data_2012, 
+                    data_2013, data_2014, data_2015, data_2016, data_2017,
+                    data_2018, data_2019, data_2020, data_2021)
+```
+
 
 ```{r}
 #Time series analysis
+library(lubridate)
+total_data$Date <- as.Date(total_data$Date, format = "%m/%d/%Y")
+total_data$Year <- year(total_data$Date)
+
+total_data %>%
+  select(Date) %>%
+  distinct() %>%
+  slice_head(n = 10)
+
+ozone_fc <- total_data %>%
+  mutate(month = floor_date(Date, "month")) %>%
+  group_by(month) %>%
+  summarize(mean_ozone = mean(`Daily AQI Value`, na.rm = TRUE))
+ozone_ts <- ts(ozone_fc$mean_ozone,
+               start = c(year(min(ozone_fc$month)), month(min(ozone_fc$month))),
+               frequency = 12)
+library(forecast)
+autoplot(ozone_ts) +
+  labs(title = "Monthly Ozone in Fort Collins", y = "Ozone (ppb)", x = "Year")
 
 ```
+
 
 ```{r}
 #Difference-in-Differences (DiD) Analysis
+full_data_2003 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/daily_44201_2003.csv")
+full_data_2021 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/daily_44201_2021.csv")
+
+boulder_2003 <- full_data_2003 %>% 
+  filter(`County Name` == "Boulder")
+
+boulder_2021 <- full_data_2021 %>% 
+  filter(`County Name` == "Boulder")
+
+larimer_2003 <- full_data_2003 %>% 
+  filter(`County Name` == "Larimer")
+
+larimer_2021 <- full_data_2021 %>% 
+  filter(`County Name` == "Larimer")
+
+did_data <- rbind(boulder_2003, boulder_2021, larimer_2003, larimer_2021) %>% 
+  mutate(`Date Local` = as.Date(`Date Local`),
+         Year = year(`Date Local`),
+         Month = month(`Date Local`))
+
+#Aggregated to year
+did_yearly_data <- did_data %>%
+  group_by(`County Name`, Year) %>%
+  summarise(AQI = mean(AQI, na.rm = TRUE)) %>%
+  ungroup()
+
+did_yearly_data <- did_yearly_data %>%
+  mutate(
+    Treated = ifelse(`County Name` == "Larimer", 1, 0),
+    Post = ifelse(Year == 2021, 1, 0),
+    Interaction = Treated * Post)
+
+print(did_yearly_data)
+
+did_model <- lm(AQI ~ Treated + Post + Interaction, data = did_yearly_data)
+summary(did_model)
+
+#Aggregated to month
+did_monthly_data <- did_data %>%
+  group_by(`County Name`, Year, Month) %>%
+  summarise(AQI = mean(AQI, na.rm = TRUE)) %>%
+  ungroup()
+
+did_monthly_data <- did_monthly_data %>%
+  mutate(
+    Treated = ifelse(`County Name` == "Larimer", 1, 0),
+    Post = ifelse(Year == 2021, 1, 0),
+    Interaction = Treated * Post)
+
+did_monthly_model <- lm(AQI ~ Treated + Post + Interaction, data = did_monthly_data)
+summary(did_monthly_model)
 
 ```
-
+In the DiD monthly model, Boulder's ozone AQI went up by 8.4 units while Larimer's ozone was smaller by 6.3 units, indicating that Larimer had a smaller increase in ozone. However, the p-value is 0.741, which is not scientifically significant; this means that the model cannot explain variations in the data and these differences could be from random error.
