@@ -290,4 +290,4 @@ Additionally, comparing Larimer County to Boulder County might require more rese
 
 These results relate to the broader field of science by displaying how models can be used to find patterns and trends in data over decades of time.
 It also connects to the need for accurate data and models in order to make decisions about environmental policies and changes on a local scale.
-For the future, similar projects can work to include other variables beyond policy changes, as well as dive deeper into differences depending on if data is collected on a smaller scale than county or a larger scale, such as by state.
+For the future, similar projects can work to include other variables beyond policy changes, as well as dive deeper into differences depending on if data is collected on a different scale than county, such as by local communities, state, or other.
