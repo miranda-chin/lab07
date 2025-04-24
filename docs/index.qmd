@@ -59,7 +59,7 @@ The expected outcome of this research is the identification of the most effectiv
 We hypothesize that policies which directly address vehicle usage—such as enhanced public transit options or urban design that reduces car dependency—will correlate with the most significant reductions in ozone concentrations.
 Ultimately, these findings can guide future environmental policy not only within Fort Collins but also serve as a blueprint for other municipalities seeking to combat ground-level ozone and protect public health in the face of growing environmental challenges.
 
-*Data:*
+*Data/Materials:*
 
 Some of the data we will be working with includes pre-generated data files from the Environmental Protection Agency focusing on ozone levels.
 We will need to narrow it down substantially in order to only get data for our area of interest, as well as focus on only the parameters which will be relevant to our project, but will most likely not need to clean the data as the majority of it is already well-ordered.
@@ -99,38 +99,37 @@ These datasets have information for specific places which make them useful for o
 
 **2.1 Study Design**
 
-This study utilizes a mixed-methods design, incorporating both quantitative and qualitative data to assess the relationship between local policy interventions and ground-level ozone concentrations in Fort Collins, Colorado.
+This study utilizes a mixed-methods design, incorporating quantitative data to assess the relationship between local policy interventions and ground-level ozone concentrations in Fort Collins, Colorado.
 The primary objective is to evaluate whether transportation-related policies aimed at reducing vehicle emissions have led to measurable changes in ambient ozone levels over time.
 
 **2.2 Study Area and Control Selection**
 
-The primary study area is Fort Collins, Colorado.
-As a control, we selected Greeley, Colorado—a nearby city with comparable population size, geography, and climate, but with fewer transportation-focused environmental interventions.
+The primary study area is Larimer, Colorado.
+As a control, we selected Boulder, Colorado—a nearby city with different policies surrounding ozone in the atmosphere.
 The assumption underlying this choice is that differences in ozone trends between the two cities can be attributed, at least in part, to differing policy regimes.
 
 **2.3 Ozone and Meteorological Data Collection**
 
 Ambient ozone concentration data will be collected from the EPA’s Air Quality System (AQS) database and local monitoring stations operated by the Colorado Department of Public Health and Environment (CDPHE).
-Data will be collected over a multi-year time frame, ideally spanning 10–15 years to ensure sufficient pre- and post-policy data points.
-In addition to ozone levels, meteorological data (including temperature, wind speed, humidity, and solar radiation) will be obtained from the National Oceanic and Atmospheric Administration (NOAA) and used to control for weather-related variability in ozone formation.
+Data will be collected over a multi-year time frame, spanning at least 10 years to ensure sufficient pre- and post-policy data points.
 
 **2.4 Policy Timeline Development**
 
 A detailed timeline of policy enactments in Fort Collins will be developed through a review of city council records, transportation master plans, and local sustainability reports.
 Each policy will be categorized by type (e.g., infrastructure investment, public transit expansion, emission regulation) and date of implementation.
-Greeley’s policy timeline will also be reviewed to ensure that it did not implement similar policies during the study period.
+Boulder’s policy timeline will also be reviewed to ensure that it did not implement similar policies during the study period.
 
 **2.5 Data Analysis**
 
 **2.5.1 Time-Series Analysis**
 
-We will conduct a time-series analysis to examine trends in ozone concentrations over time in both Fort Collins and Greeley.
+We will conduct a time-series analysis to examine trends in ozone concentrations over time in both Larimer and Boulder county.
 Data will be aggregated to monthly averages to smooth out short-term fluctuations while preserving seasonal patterns.
 
 **2.5.2 Difference-in-Differences (DiD) Analysis**
 
-To estimate the causal impact of Fort Collins’ policies on ozone levels, we will use a difference-in-differences (DiD) statistical model.
-This method compares the change in ozone concentrations in Fort Collins before and after policy implementation with the corresponding change in Greeley over the same period.
+To estimate the causal impact of Larimer’s policies on ozone levels, we will use a difference-in-differences (DiD) statistical model.
+This method compares the change in ozone concentrations in Larimer before and after policy implementation with the corresponding change in Boulder over the same period.
 The basic DiD model is as follows:
 
 Yit​=α+β1​Postt​+β2​Treatmenti​+β3​(Postt​×Treatmenti​)+γXit​+ϵit​
@@ -148,6 +147,7 @@ Xit​ = vector of control variables (e.g., temperature, wind)
 β3​ = estimated treatment effect
 
 *Results*
+
 ```{r}
 #Set up data
 #Load data
@@ -177,7 +177,6 @@ total_data <- rbind(data_2003, data_2004, data_2005, data_2006, data_2007,
                     data_2018, data_2019, data_2020, data_2021)
 ```
 
-
 ```{r}
 #Time series analysis
 library(lubridate)
@@ -201,7 +200,6 @@ autoplot(ozone_ts) +
   labs(title = "Monthly Ozone in Fort Collins", y = "Ozone (ppb)", x = "Year")
 
 ```
-
 
 ```{r}
 #Difference-in-Differences (DiD) Analysis
@@ -257,5 +255,39 @@ did_monthly_data <- did_monthly_data %>%
 did_monthly_model <- lm(AQI ~ Treated + Post + Interaction, data = did_monthly_data)
 summary(did_monthly_model)
 
+#Data visualization
+avg_trend <- did_monthly_data %>%
+  group_by(Month, Year, Treated) %>%
+  summarise(mean_AQI = mean(AQI, na.rm = TRUE)) %>%
+  mutate(
+    Time = as.Date(paste(Year, Month, "01", sep = "-")))
+
+
+ggplot(avg_trend, aes(x = Time, y = mean_AQI, color = factor(Treated))) +
+  geom_line(size = 1.2) +
+  geom_vline(xintercept = as.Date("2021-01-01"), linetype = "dashed", color = "black") +
+  labs(
+    title = "DID Model with AQI Over Time",
+    x = "Time",
+    y = "Monthly Average AQI",
+    color = "Treated") +
+  theme_minimal()
+
 ```
-In the DiD monthly model, Boulder's ozone AQI went up by 8.4 units while Larimer's ozone was smaller by 6.3 units, indicating that Larimer had a smaller increase in ozone. However, the p-value is 0.741, which is not scientifically significant; this means that the model cannot explain variations in the data and these differences could be from random error.
+
+In the DiD monthly model, Boulder's ozone AQI went up by 8.4 units while Larimer's ozone was smaller by 6.3 units, indicating that Larimer had a smaller increase in ozone.
+However, the p-value is 0.741, which is not scientifically significant; this means that the model cannot explain variations in the data and these differences could be from random error.
+
+*Discussion*
+
+Looking at the Difference-in-Differences (DiD) model, the trends between Larimer and Boulder are very similar.
+However, the actual model itself resulted in a p-value above 0.05, indicating that the model did not yield statistically significant results and cannot explain the data accurately.
+This implicates that although these policies have had a positive impact on air quality in Larimer County, we still cannot say for sure if policy is the sole reason for improvement.
+Looking at the monthly AQI of Larimer in the time series visualization, it implies that ozone AQI has continued to experience fluctuations both with and without new policy.
+
+The limitations of this analysis include that there could be other variables that are not being considered in the model, such as wildfires, the pandemic, and other changes.
+Additionally, comparing Larimer County to Boulder County might require more research into what policies exist in Boulder and if they have similar effects to the ones implemented in Larimer over the past years.
+
+These results relate to the broader field of science by displaying how models can be used to find patterns and trends in data over decades of time.
+It also connects to the need for accurate data and models in order to make decisions about environmental policies and changes on a local scale.
+For the future, similar projects can work to include other variables beyond policy changes, as well as dive deeper into differences depending on if data is collected on a different scale than county, such as by local communities, state, or other.
