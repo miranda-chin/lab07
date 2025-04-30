@@ -303,13 +303,13 @@ However, the p-value is 0.741, which is not scientifically significant; this mea
 
 *Discussion*
 
-Looking at the Difference-in-Differences (DiD) model, the trends between Larimer and Boulder are very similar.
+Looking at the Difference-in-Differences (DiD) model and Figure 4, the trends between Larimer and Boulder are very similar.
 However, the actual model itself resulted in a p-value above 0.05, indicating that the model did not yield statistically significant results and cannot explain the data accurately.
 This implicates that although these policies have had a positive impact on air quality in Larimer County, we still cannot say for sure if policy is the sole reason for improvement.
-Looking at the monthly AQI of Larimer in the time series visualization, it implies that ozone AQI has continued to experience fluctuations both with and without new policy.
+Looking at the monthly AQI of Larimer in the time series visualization of Figure 3, it implies that ozone AQI has continued to experience fluctuations both with and without new policy.
 
 The limitations of this analysis include that there could be other variables that are not being considered in the model, such as wildfires, the pandemic, and other changes.
-Additionally, comparing Larimer County to Boulder County might require more research into what policies exist in Boulder and if they have similar effects to the ones implemented in Larimer over the past years.
+Additionally, in Figure 4 comparing Larimer County to Boulder County might require more research into what policies exist in Boulder and if they have similar effects to the ones implemented in Larimer over the past years.
 
 These results relate to the broader field of science by displaying how models can be used to find patterns and trends in data over decades of time.
 It also connects to the need for accurate data and models in order to make decisions about environmental policies and changes on a local scale.
