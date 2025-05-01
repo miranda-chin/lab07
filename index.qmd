@@ -298,7 +298,7 @@ ggplot(avg_trend, aes(x = Time, y = mean_AQI, color = factor(Treated))) +
 Figure 4.
 Difference-in-Differences model visualization comparing only the AQI of years 2003 and 2021 of Larimer County and Boulder county, labeled 0 and 1 respectively.
 
-In the DiD monthly model, Boulder's ozone AQI went up by 8.4 units while Larimer's ozone was smaller by 6.3 units, indicating that Larimer had a smaller increase in ozone.
+In the DiD monthly model in Figure 4, Boulder's ozone AQI went up by 8.4 units while Larimer's ozone was smaller by 6.3 units, indicating that Larimer had a smaller increase in ozone.
 However, the p-value is 0.741, which is not scientifically significant; this means that the model cannot explain variations in the data and these differences could be from random error.
 
 *Discussion*
