@@ -29,7 +29,7 @@ Ozone has been proven to be connected to health risks such as asthma and respira
 Air quality is an increasingly urgent public health concern across many urban centers in the United States, and Fort Collins, Colorado, is no exception.
 Despite its reputation for clean air and progressive environmental values, Fort Collins has consistently ranked among the worst cities in the nation for ground-level ozone pollution.
 According to recent data, the region frequently exceeds the ozone limits set by the Environmental Protection Agency (EPA), placing residents—especially those with respiratory conditions—at heightened risk.
-High levels of ozone have been directly linked to increased rates of asthma, chronic bronchitis, and other respiratory diseases, which can result in more frequent emergency room visits and reduced overall quality of life [@chang2006ozone], [@kinney2000respiratory]. Ground-level ozone, unlike the protective stratospheric ozone layer, is a harmful air pollutant formed through complex photo-chemical reactions. Specifically, it is produced when volatile organic compounds (VOCs) and nitrogen oxides (NOx) react in the presence of sunlight and heat. Of these precursors, NOx is primarily emitted from the combustion of fossil fuels, making vehicle emissions a dominant source in urban environments [@lowi1990method].
+High levels of ozone have been directly linked to increased rates of asthma, chronic bronchitis, and other respiratory diseases, which can result in more frequent emergency room visits and reduced overall quality of life [@chang2006ozone], [@kowalska2009air]. Ground-level ozone, unlike the protective stratospheric ozone layer, is a harmful air pollutant formed through complex photo-chemical reactions [@horn2024air]. Specifically, it is produced when volatile organic compounds (VOCs) and nitrogen oxides (NOx) react in the presence of sunlight and heat. Of these precursors, NOx is primarily emitted from the combustion of fossil fuels, making vehicle emissions a dominant source in urban environments [@lowi1990method].
 
 With the growing population and vehicular traffic in Fort Collins, the city has faced increasing pressure to manage its emissions and reduce ozone pollution levels.
 Recognizing the health and environmental risks posed by ozone pollution, Fort Collins has implemented a series of policy initiatives over the past two decades aimed at curbing vehicle emissions and promoting cleaner transportation alternatives.
@@ -303,8 +303,14 @@ However, the actual model itself resulted in a p-value above 0.05, indicating th
 This implicates that although these policies have had a positive impact on air quality in Larimer County, we still cannot say for sure if policy is the sole reason for improvement.
 Looking at the monthly AQI of Larimer in the time series visualization of Figure 3, it implies that ozone AQI has continued to experience fluctuations both with and without new policy.
 
-The limitations of this analysis include that there could be other variables that are not being considered in the model, such as wildfires, the pandemic, and other changes.
-Additionally, in Figure 4 comparing Larimer County to Boulder County might require more research into what policies exist in Boulder and if they have similar effects to the ones implemented in Larimer over the past years.
+Several factors may explain this inconclusive result.
+First, the policies implemented in Fort Collins may not have been strong or sustained enough to produce a detectable change in ozone levels within the timeframe studied.
+Ozone formation is influenced by a complex set of variables, including temperature, regional air currents, and emissions from neighboring areas, all of which may dilute the local impact of policy efforts [@kumari2018critical].
+Additionally, ozone pollution is a secondary pollutant, meaning it forms from precursor chemicals rather than being directly emitted.
+This makes reductions in ozone slower and more indirect than reductions in primary pollutants like NO₂ or PM₂.₅ [@zhan2018driving].
+
+Another possibility is that the policy interventions overlapped with other regional or statewide efforts, making it difficult to isolate the effect of Fort Collins' actions alone.
+The DiD approach assumes no other major interventions or shocks affected one city and not the other during the study period, but this assumption may not hold perfectly given Colorado’s broader air quality regulations and environmental shifts.
 
 These results relate to the broader field of science by displaying how models can be used to find patterns and trends in data over decades of time.
 It also connects to the need for accurate data and models in order to make decisions about environmental policies and changes on a local scale.
