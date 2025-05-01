@@ -18,6 +18,17 @@ editor:
 
 ## Ozone pollution associated with Fort Collins policies
 
+*Abstract:*
+
+Air quality is a factor that affects many different facets of life; not only is it an indicator of environmental health and stability, but also affects human health and well being.
+Increased rates of ozone has been a growing issue in many different places around the world due to rapidly increasing rates of population, especially in urban areas, as well as behavior that furthers this gas, such as motor vehicle use.
+Ozone has been proven to be connected to health risks such as asthma and respiratory diseases, putting more people in danger as it becomes a more prevalent issue.
+In this project, we aim to determine if Fort Collins' policies regarding ozone control have been successful in addressing these issues, especially when comparing other counties to Larimer county.
+Our methods are composed of a time series analysis to track ozone over the time period of 2003 before policies were passed to 2021 afterwards, as well as a Difference-in-Differences model that will compare Larimer's air quailty index (AQI) to that of Boulder county nearby.
+We found that while Larimer had less increase in AQI than Boulder, the model was not statistically significant and did not prove this connection was solely because of policies.
+Additionally, while the time series does indicate a general decrease in ozone, it also does not take into account other variables such as wildfires, population changes, and societal shifts such as the COVID pandemic to name a few.
+However, this type of work is still important and relevant as it helps to determine the significance of policy and which ones are most effective, information that helps to inform future plans to combat climate change.
+
 *Introduction:*
 
 Air quality is an increasingly urgent public health concern across many urban centers in the United States, and Fort Collins, Colorado, is no exception.
@@ -46,7 +57,7 @@ Ambient ozone concentration data will be obtained from established air quality m
 Using time-series analysis, we will identify significant changes or trends in ozone levels and assess whether these coincide with policy milestones.
 To control for meteorological influences—such as seasonal temperature fluctuations and wind patterns—we will incorporate relevant environmental variables into our models.
 In addition to ground-based data and ozone tracking, we will also be relating those findings to policy action and determining if there are connections between the two.
-To strengthen the analytical framework, we will conduct a comparative assessment with the city of Greely, as the city has not implemented any policies to address ozone.
+To strengthen the analytical framework, we will conduct a comparative assessment with the city of Boulder, to see if Lairmer's policies has affected the area significantly or not.
 This will help contextualize Fort Collins’ progress and provide a more nuanced understanding of policy effectiveness in diverse regulatory environments.
 The policy component of the study will involve a detailed review of municipal documents, transportation plans, city council records, and enforcement reports to compile a timeline of enacted policies.
 These will be categorized by type—such as infrastructure investments, regulatory changes, or incentive programs—and evaluated for their scope, implementation rigor, and intended outcomes.
@@ -81,11 +92,17 @@ ggplot(data = filter_data, aes(x = `Site Num`, y = `AQI`)) +
   labs(title = "AQI in Larimer Sites", x = "Site Number", y = "AQI")
 ```
 
+Figure 1.
+Visualization of Larimer's two EPA sites that collect ozone and AQI data.
+
 ```{r}
 ggplot(data = filter_data, aes(x = `Date Local`, y = AQI)) +
   geom_col() +
   labs(title = "Larimer AQI Over Time", x = "Date", y = "AQI")
 ```
+
+Figure 2.
+Visualization of AQI in Larimer county over time from January 2003 to January 2004.
 
 *Preliminary methods:*
 
@@ -201,6 +218,9 @@ autoplot(ozone_ts) +
 
 ```
 
+Figure 3.
+Time series analysis of Larimer AQI from the years 2003 to 2021.
+
 ```{r}
 #Difference-in-Differences (DiD) Analysis
 full_data_2003 <- readr::read_csv("/Users/mirandachin/ESS330/lab07/data/daily_44201_2003.csv")
@@ -275,18 +295,21 @@ ggplot(avg_trend, aes(x = Time, y = mean_AQI, color = factor(Treated))) +
 
 ```
 
-In the DiD monthly model, Boulder's ozone AQI went up by 8.4 units while Larimer's ozone was smaller by 6.3 units, indicating that Larimer had a smaller increase in ozone.
+Figure 4.
+Difference-in-Differences model visualization comparing only the AQI of years 2003 and 2021 of Larimer County and Boulder county, labeled 0 and 1 respectively.
+
+In the DiD monthly model in Figure 4, Boulder's ozone AQI went up by 8.4 units while Larimer's ozone was smaller by 6.3 units, indicating that Larimer had a smaller increase in ozone.
 However, the p-value is 0.741, which is not scientifically significant; this means that the model cannot explain variations in the data and these differences could be from random error.
 
 *Discussion*
 
-Looking at the Difference-in-Differences (DiD) model, the trends between Larimer and Boulder are very similar.
+Looking at the Difference-in-Differences (DiD) model and Figure 4, the trends between Larimer and Boulder are very similar.
 However, the actual model itself resulted in a p-value above 0.05, indicating that the model did not yield statistically significant results and cannot explain the data accurately.
 This implicates that although these policies have had a positive impact on air quality in Larimer County, we still cannot say for sure if policy is the sole reason for improvement.
-Looking at the monthly AQI of Larimer in the time series visualization, it implies that ozone AQI has continued to experience fluctuations both with and without new policy.
+Looking at the monthly AQI of Larimer in the time series visualization of Figure 3, it implies that ozone AQI has continued to experience fluctuations both with and without new policy.
 
 The limitations of this analysis include that there could be other variables that are not being considered in the model, such as wildfires, the pandemic, and other changes.
-Additionally, comparing Larimer County to Boulder County might require more research into what policies exist in Boulder and if they have similar effects to the ones implemented in Larimer over the past years.
+Additionally, in Figure 4 comparing Larimer County to Boulder County might require more research into what policies exist in Boulder and if they have similar effects to the ones implemented in Larimer over the past years.
 
 These results relate to the broader field of science by displaying how models can be used to find patterns and trends in data over decades of time.
 It also connects to the need for accurate data and models in order to make decisions about environmental policies and changes on a local scale.
